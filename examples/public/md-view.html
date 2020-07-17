@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href="/libs/prism-tomorrow.css" rel="stylesheet" type="text/css" />
+	<link href='/libs/marxico.css' rel='stylesheet'>
+	<style>
+		.empty-tips{
+			color: #C0C4CC;
+			text-align: center;
+			font-size: 12px;
+			font-weight: Microsoft YaHei;
+		}
+	</style>
+</head>
+<body>
+	<section class="wrap"></section>
+
+	<script src="/libs/prism.js"></script>
+	<script src="/libs/marked.min.js"></script>
+	<script>
+		const el = document.querySelector('.wrap');
+
+		const query = location.search.slice(1).split('&').reduce((q, kv)=>{
+			const [k, v] = kv.split('=');
+			q[k] = decodeURIComponent(v);
+			return q;
+		}, {});
+
+		if(query.path){
+			fetch(`/docs/${ query.path }.md`).then(v=>{
+				if(/^text\/markdown;/.test(v.headers.get('content-type'))){
+					return v.text();
+				}
+				return Promise.reject(v);
+			}).then(render).catch(()=>render());
+		}
+
+		function render(mdText){
+			if(mdText){
+				el.innerHTML = marked(mdText);
+
+				[...el.querySelectorAll('code')].map(function(v){
+					Prism.highlightElement(v);
+				});
+			}else{
+				el.innerHTML = `<p class="empty-tips">数据内容不存在</p>`;
+			}
+		}
+	</script>
+</body>
+</html>

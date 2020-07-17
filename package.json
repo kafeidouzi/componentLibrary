@@ -1,0 +1,21 @@
+{
+	"name": "gaia-lunzi",
+	"version": "0.0.1",
+	"description": "gaia-前端公共组件库",
+	"main": "index.js",
+	"directories": {
+		"doc": "docs",
+		"example": "examples"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"serve": "cd examples&npm run serve"
+	},
+	"repository": {
+		"type": "git",
+		"url": "http://git.yiside.cn/yiside/gaia-lunzi.git"
+	},
+	"keywords": [],
+	"author": "zhangjianzhong@yiside.com",
+	"license": "ISC"
+}
